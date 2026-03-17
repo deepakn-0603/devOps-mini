@@ -15,20 +15,20 @@ pipeline {
 
         stage('Check Docker') {
             steps {
-                bat 'docker --version'
-                bat 'docker compose version'
+                sh 'docker --version'
+                sh 'docker compose version'
             }
         }
 
         stage('Build') {
             steps {
-                bat "docker compose -f %COMPOSE_FILE% build"
+                sh "docker compose -f %COMPOSE_FILE% build"
             }
         }
 
         stage('Deploy') {
             steps {
-                bat """
+                sh """
                     docker compose down
                     docker compose up -d --build
                 """
