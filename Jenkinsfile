@@ -9,7 +9,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git ''
+                git 'https://github.com/deepakn-0603/devOps-mini.git'
             }
         }
 
