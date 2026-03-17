@@ -15,16 +15,16 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'docker-compose -f $COMPOSE_FILE build'
+                sh "docker compose -f $COMPOSE_FILE build"
             }
         }
 
         stage('Deploy') {
             steps {
-                sh '''
+                sh """
                     docker compose down
                     docker compose up -d --build
-                '''
+                """
             }
         }
 
