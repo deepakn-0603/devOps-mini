@@ -13,15 +13,22 @@ pipeline {
             }
         }
 
+        stage('Check Docker') {
+            steps {
+                bat 'docker --version'
+                bat 'docker compose version'
+            }
+        }
+
         stage('Build') {
             steps {
-                sh "docker compose -f $COMPOSE_FILE build"
+                bat "docker compose -f %COMPOSE_FILE% build"
             }
         }
 
         stage('Deploy') {
             steps {
-                sh """
+                bat """
                     docker compose down
                     docker compose up -d --build
                 """
@@ -32,7 +39,7 @@ pipeline {
 
     post {
         success {
-            echo 'Deployment successfull'
+            echo 'Deployment successful'
         }
         failure {
             echo 'Build failed'
