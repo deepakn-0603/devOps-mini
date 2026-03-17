@@ -1,8 +1,8 @@
-from flask import flask
+from flask import Flask
 import psycopg2
 import os
 
-app = flask(__name__)
+app = Flask(__name__)
 
 def get_db_connection():
     conn = psycopg2.connect(
