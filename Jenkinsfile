@@ -28,9 +28,9 @@ pipeline {
                                                   usernameVariable: 'PGADMIN_EMAIL', 
                                                   passwordVariable: 'PGADMIN_PASSWORD')]) {
                     sh '''
-                        docker compose -file $COMPOSE_FILE build
-                        docker compose -file $COMPOSE_FILE down
-                        docker compose -file $COMPOSE_FILE up -d --build
+                        docker compose --file $COMPOSE_FILE build
+                        docker compose --file $COMPOSE_FILE down
+                        docker compose --file $COMPOSE_FILE up -d --build
                     '''
                 }
             }
