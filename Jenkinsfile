@@ -16,7 +16,7 @@ pipeline {
         stage('Check Docker') {
             steps {
                 sh 'docker --version'
-                sh 'docker-compose version'
+                sh 'docker compose version'
             }
         }
 
@@ -29,8 +29,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
-                    docker-compose down
-                    docker-compose up -d --build
+                    docker compose down
+                    docker compose up -d --build
                 """
             }
         }
