@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         COMPOSE_FILE = 'docker-compose.yml'
+        DB_NAME = 'devOps-mini-project'
+        DB_USER = 'root'
     }
 
     stages {
@@ -16,27 +18,21 @@ pipeline {
         stage('Check Docker') {
             steps {
                 sh 'docker --version'
-                sh 'docker-compose --version || docker compose version'
+                sh 'docker compose version'
             }
         }
 
-        stage('Build') {
+        stage('Build & Deploy') {
             steps {
-                sh 'docker-compose -f $COMPOSE_FILE build || docker compose -f $COMPOSE_FILE build'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                sh '''
-                    if command -v docker-compose &> /dev/null; then
-                        docker-compose down
-                        docker-compose up -d --build
-                    else
-                        docker compose down
-                        docker compose up -d --build
-                    fi
-                '''
+                withCredentials([usernamePassword(credentialsId: 'pgadmin-creds', 
+                                                  usernameVariable: 'PGADMIN_EMAIL', 
+                                                  passwordVariable: 'PGADMIN_PASSWORD')]) {
+                    sh '''
+                        docker compose -f $COMPOSE_FILE build
+                        docker compose -f $COMPOSE_FILE down
+                        docker compose -f $COMPOSE_FILE up -d --build
+                    '''
+                }
             }
         }
 
