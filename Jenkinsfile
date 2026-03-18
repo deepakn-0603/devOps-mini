@@ -3,8 +3,10 @@ pipeline {
 
     environment {
         COMPOSE_FILE = 'docker-compose.yml'
+        DB_HOST = 'db'
         DB_NAME = 'devOps-mini-project'
-        DB_USER = 'root'
+        DB_USER = 'postgres'
+        DB_PORT = '5432'
     }
 
     stages {
