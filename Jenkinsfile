@@ -16,22 +16,27 @@ pipeline {
         stage('Check Docker') {
             steps {
                 sh 'docker --version'
-                sh 'docker compose version'
+                sh 'docker-compose --version || docker compose version'
             }
         }
 
         stage('Build') {
             steps {
-                sh "docker compose -f %COMPOSE_FILE% build"
+                sh 'docker-compose -f $COMPOSE_FILE build || docker compose -f $COMPOSE_FILE build'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh """
-                    docker compose down
-                    docker compose up -d --build
-                """
+                sh '''
+                    if command -v docker-compose &> /dev/null; then
+                        docker-compose down
+                        docker-compose up -d --build
+                    else
+                        docker compose down
+                        docker compose up -d --build
+                    fi
+                '''
             }
         }
 
