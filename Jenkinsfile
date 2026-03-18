@@ -3,8 +3,10 @@ pipeline {
 
     environment {
         COMPOSE_FILE = 'docker-compose.yml'
+        DB_HOST = 'db'
         DB_NAME = 'devOps-mini-project'
-        DB_USER = 'root'
+        DB_USER = 'postgres'
+        DB_PORT = '5432'
     }
 
     stages {
@@ -28,9 +30,10 @@ pipeline {
                                                   usernameVariable: 'PGADMIN_EMAIL', 
                                                   passwordVariable: 'PGADMIN_PASSWORD')]) {
                     sh '''
-                        docker-compose -f $COMPOSE_FILE build
-                        docker-compose -f $COMPOSE_FILE down
-                        docker-compose -f $COMPOSE_FILE up -d --build
+                        export DB_PASSWORD=your_db_password
+                        docker compose -f $COMPOSE_FILE build
+                        docker compose -f $COMPOSE_FILE down
+                        docker compose -f $COMPOSE_FILE up -d --build
                     '''
                 }
             }

@@ -10,6 +10,7 @@ services:
       - .env
     depends_on:
       - db
+      - db
     restart: always
 
   db:
