@@ -24,7 +24,7 @@ pipeline {
 
         stage('Build & Deploy') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'pgadmin-creds', 
+                withCredentials([usernamePassword(credentialsId: 'pgadmin', 
                                                   usernameVariable: 'PGADMIN_EMAIL', 
                                                   passwordVariable: 'PGADMIN_PASSWORD')]) {
                     sh '''
