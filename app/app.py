@@ -22,7 +22,7 @@ def home():
     result = cur.fetchall()
     cur.close()
     conn.close()
-    return f"DB connected: {result}"
+    return f"This is running automatically on port 5000: {result}"
 
 
 if __name__ == "__main__":
