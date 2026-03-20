@@ -3,7 +3,6 @@ version: "3.8"
 services:
   web:
     build: .
-    container_name: flask-app
     ports:
       - "5000:5000"
     env_file:
@@ -32,7 +31,6 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin
     env_file:
       - .env
     environment:
