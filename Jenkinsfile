@@ -20,7 +20,7 @@ pipeline {
         stage('Check Docker') {
             steps {
                 sh 'docker --version'
-                sh 'docker-compose --version || docker compose version'
+                sh 'docker compose version'
             }
         }
 
@@ -30,6 +30,7 @@ pipeline {
                                                   usernameVariable: 'PGADMIN_EMAIL', 
                                                   passwordVariable: 'PGADMIN_PASSWORD')]) {
                     sh '''
+                        set -x
                         export DB_PASSWORD=your_db_password
                         docker compose -f $COMPOSE_FILE build
                         docker compose -f $COMPOSE_FILE down
